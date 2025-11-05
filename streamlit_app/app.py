@@ -80,30 +80,20 @@ if option == "📁 Upload Image":
     st.subheader("Upload an Image")
     uploaded_image = st.file_uploader("Upload an image...", type=["jpg", "jpeg", "png"])
     if uploaded_image is not None:
-        st.success("Image uploaded successfully!")
-        image = Image.open(uploaded_image)
-        st.image(image, caption="Uploaded Image", use_column_width=True)
+    st.success("Image uploaded successfully!")
+    image = Image.open(uploaded_image)
+    st.image(image, caption="Uploaded Image", use_column_width=True)
 
-        if st.button("Predict Gesture"):
-            st.write("Loading model and predicting...")
+    if st.button("Predict Gesture"):
+        st.write("Loading model and predicting...")
 
-            # تحويل PIL image إلى numpy array لـ OpenCV
-            frame = np.array(image)
-            if len(frame.shape) == 2:  # grayscale
-                pass 
-            # تحويل RGB/RGBA إلى grayscale
-            elif len(frame.shape) == 3:  # إذا الصورة فيها channels
-                frame = cv2.cvtColor(frame, cv2.COLOR_RGB2GRAY)
-            
-            # الآن frame shape = (height, width)
-            Predicted_gesture = predict_gesture(frame)
+        # PIL -> numpy -> grayscale
+        frame = np.array(image)
+        if len(frame.shape) == 3:  # RGB or RGBA
+            frame = cv2.cvtColor(frame, cv2.COLOR_RGB2GRAY)
 
-           # elif frame.shape[2] == 4:  # RGBA
-            #    frame = cv2.cvtColor(frame, cv2.COLOR_RGBA2BGR)
-           # elif frame.shape[2] == 3:  # RGB
-                #frame = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
-
-            Predicted_gesture = predict_gesture(frame)
+        Predicted_gesture = predict_gesture(frame)
+        st.success(f"Predicted Gesture: {Predicted_gesture}")
             st.success(f"Predicted Gesture: {Predicted_gesture}")
     else:
         st.warning("Please upload an image first.")
@@ -124,4 +114,5 @@ elif option == "📷 Use Camera":
             st.success(f"Predicted Gesture: {prediction}")
 
 st.markdown("---")
+
 
