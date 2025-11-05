@@ -2,9 +2,8 @@ import streamlit as st
 from PIL import Image
 import cv2
 import numpy as np
-from camera_utils import capture_frame 
+from camera import capture_frame
 from model_utils import predict_gesture
-
 
 st.set_page_config(page_title="Hand Gesture Recognition", page_icon="🤖", layout="centered")
 
@@ -16,7 +15,6 @@ st.markdown("""
         color: #e5ebf1;
     }
 
-    /* خلفية المحتوى الرئيسي */
     [data-testid="stVerticalBlock"] {
         width: 120%;
         background-color: #3C467B;
@@ -30,7 +28,6 @@ st.markdown("""
         text-align: center;
         font-family: 'Arial Black';
     }
-    
 
     .stButton>button {
         background-color: white;
@@ -44,51 +41,41 @@ st.markdown("""
     .stButton>button:hover {
         background-color: #155d8a;
     }
-            .main-title {
-            color: #1f77b4;
-            text-align: center;
-            font-size: 40px;
-            font-weight: bold;
-            text-shadow: 2px 2px 5px #ccc;
-        }
 
-        .sub-text {
-            color: #555;
-            text-align: center;
-            font-size: 18px;
-            font-style: italic;
-        }
-            
+    .main-title {
+        color: #1f77b4;
+        text-align: center;
+        font-size: 40px;
+        font-weight: bold;
+        text-shadow: 2px 2px 5px #ccc;
+    }
+
+    .sub-text {
+        color: #555;
+        text-align: center;
+        font-size: 18px;
+        font-style: italic;
+    }
     </style>
 """, unsafe_allow_html=True)
-# --- Model description shown by default ---
-st.markdown(
-    """
+
+# --- Model description ---
+st.markdown("""
     <div style="text-align:center;">
         <h2 style="color:white; font_size:22px">🧠 Welcome to the Hand Gesture Recognition App</h2>
         <p style="color:white; font-size:20px;">
             This AI-powered model can recognize various hand gestures in real-time.
         </p>
     </div>
-    """,
-    unsafe_allow_html=True
-)
+""", unsafe_allow_html=True)
 
 st.markdown("---")
 
-#st.title("🧠 Hand Gesture Recognition App")
-#st.write("Upload an image or capture one to identify the hand gesture using our AI model.")
+st.markdown("<h3 style='color:white; font-size:25px; text-align:left;'>Select Input Type:</h3>", unsafe_allow_html=True)
 
-st.markdown(
-    "<h3 style='color:white; font-size:25px; text-align:left;'>Select Input Type:</h3>",
-    unsafe_allow_html=True
-)
+option = st.radio("", ("📁 Upload Image", "📷 Use Camera"))
 
-option = st.radio(
-    "",
-    ("📁 Upload Image", "📷 Use Camera")
-)
-
+# --------------------- Upload Image ---------------------
 if option == "📁 Upload Image":
     st.subheader("Upload an Image")
     uploaded_image = st.file_uploader("Upload an image...", type=["jpg", "jpeg", "png"])
@@ -96,27 +83,37 @@ if option == "📁 Upload Image":
         st.success("Image uploaded successfully!")
         image = Image.open(uploaded_image)
         st.image(image, caption="Uploaded Image", use_column_width=True)
-        st.write("Image successfully uploaded!")
+
         if st.button("Predict Gesture"):
             st.write("Loading model and predicting...")
-            Predicted_gesture=predict_gesture(uploaded_image)
-            st.success(f"Predicted Gesture:{Predicted_gesture}")
+
+            # تحويل PIL image إلى numpy array لـ OpenCV
+            frame = np.array(image)
+            if len(frame.shape) == 2:  # grayscale
+                pass
+            elif frame.shape[2] == 4:  # RGBA
+                frame = cv2.cvtColor(frame, cv2.COLOR_RGBA2BGR)
+            elif frame.shape[2] == 3:  # RGB
+                frame = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
+
+            Predicted_gesture = predict_gesture(frame)
+            st.success(f"Predicted Gesture: {Predicted_gesture}")
     else:
         st.warning("Please upload an image first.")
-        #st.info("Please upload an image to start.")
 
+# --------------------- Camera ---------------------
 elif option == "📷 Use Camera":
     st.subheader("Capture from Camera")
     st.write("Click below to capture a photo using your webcam:")
     st.info("Please make sure your hand is clearly visible in front of the camera for best results.")
-    #camera_image = st.camera_input("Take a picture")
-    camera_image,proccesed=capture_frame()
-    if camera_image is not None:  
-        st.image(camera_image,channels="BGR", caption="Captured Image", use_column_width=True)
+
+    camera_image, processed = capture_frame()
+    if camera_image is not None:
+        st.image(camera_image, channels="BGR", caption="Captured Image", use_column_width=True)
+
         if st.button("Predict Gesture from Camera"):
-            prediction=predict_gesture(proccesed)
             st.write("🧠 Loading model and predicting...")
-            #st.success("Predicted Gesture: {prediction}")
+            prediction = predict_gesture(processed)
+            st.success(f"Predicted Gesture: {prediction}")
 
 st.markdown("---")
-
