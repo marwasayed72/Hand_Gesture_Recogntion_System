@@ -2,7 +2,7 @@ import streamlit as st
 from PIL import Image
 import cv2
 import numpy as np
-from camera import capture_frame
+from camera_utils import capture_frame
 from model_utils import predict_gesture
 
 st.set_page_config(page_title="Hand Gesture Recognition", page_icon="🤖", layout="centered")
@@ -117,3 +117,4 @@ elif option == "📷 Use Camera":
             st.success(f"Predicted Gesture: {prediction}")
 
 st.markdown("---")
+
