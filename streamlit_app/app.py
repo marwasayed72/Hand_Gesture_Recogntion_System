@@ -2,7 +2,7 @@ import streamlit as st
 from PIL import Image
 import cv2
 import numpy as np
-from cam_utils import capture_frame 
+from camera_utils import capture_frame 
 from model_utils import predict_gestures
 
 
@@ -117,4 +117,5 @@ elif option == "📷 Use Camera":
             prediction=predict_gesture(proccesed)
             st.write("🧠 Loading model and predicting...")
             #st.success("Predicted Gesture: {prediction}")
+
 st.markdown("---")
