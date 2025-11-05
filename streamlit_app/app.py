@@ -2,7 +2,7 @@ import streamlit as st
 from PIL import Image
 import cv2
 import numpy as np
-from camera import capture_frame
+from camera_utils import capture_frame
 from model_utils import predict_gesture
 
 st.set_page_config(page_title="Hand Gesture Recognition", page_icon="🤖", layout="centered")
@@ -90,11 +90,18 @@ if option == "📁 Upload Image":
             # تحويل PIL image إلى numpy array لـ OpenCV
             frame = np.array(image)
             if len(frame.shape) == 2:  # grayscale
-                pass
-            elif frame.shape[2] == 4:  # RGBA
-                frame = cv2.cvtColor(frame, cv2.COLOR_RGBA2BGR)
-            elif frame.shape[2] == 3:  # RGB
-                frame = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
+                pass 
+            # تحويل RGB/RGBA إلى grayscale
+            elif len(frame.shape) == 3:  # إذا الصورة فيها channels
+                frame = cv2.cvtColor(frame, cv2.COLOR_RGB2GRAY)
+            
+            # الآن frame shape = (height, width)
+            Predicted_gesture = predict_gesture(frame)
+
+           # elif frame.shape[2] == 4:  # RGBA
+            #    frame = cv2.cvtColor(frame, cv2.COLOR_RGBA2BGR)
+           # elif frame.shape[2] == 3:  # RGB
+                #frame = cv2.cvtColor(frame, cv2.COLOR_RGB2BGR)
 
             Predicted_gesture = predict_gesture(frame)
             st.success(f"Predicted Gesture: {Predicted_gesture}")
@@ -117,3 +124,4 @@ elif option == "📷 Use Camera":
             st.success(f"Predicted Gesture: {prediction}")
 
 st.markdown("---")
+
