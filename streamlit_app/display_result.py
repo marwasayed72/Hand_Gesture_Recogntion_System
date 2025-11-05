@@ -1,0 +1,25 @@
+import cv2
+import numpy as np
+
+def display_result(frame, prediction):
+
+    x1, y1, x2, y2 = 100, 100, 300, 300
+    cv2.rectangle(frame, (x1, y1), (x2, y2), (0, 255, 0), 2)
+
+    if isinstance(prediction, str):
+        text = f"Gesture: {prediction}"
+        cv2.putText(frame, text, (x1, y1 - 10),
+                    cv2.FONT_HERSHEY_SIMPLEX, 0.8, (0, 255, 255), 2)
+
+    elif isinstance(prediction, dict):
+        sorted_preds = sorted(prediction.items(), key=lambda x: x[1], reverse=True)
+        for i, (label, prob) in enumerate(sorted_preds[:3]):
+            text = f"{label}: {prob*100:.1f}%"
+            cv2.putText(frame, text, (x1, y2 + 30 + i*25),
+                        cv2.FONT_HERSHEY_SIMPLEX, 0.7, (0, 255, 255), 2)
+
+    cv2.imshow("Hand Gesture Recognition", frame)
+
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        return False
+    return True
