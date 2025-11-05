@@ -3,7 +3,7 @@ from PIL import Image
 import cv2
 import numpy as np
 from camera_utils import capture_frame 
-from model_utils import predict_gestures
+from model_utils import predict_gesture
 
 
 st.set_page_config(page_title="Hand Gesture Recognition", page_icon="🤖", layout="centered")
@@ -119,3 +119,4 @@ elif option == "📷 Use Camera":
             #st.success("Predicted Gesture: {prediction}")
 
 st.markdown("---")
+
