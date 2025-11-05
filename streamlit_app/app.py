@@ -5,6 +5,7 @@ import numpy as np
 from camera_utils import capture_frame
 from model_utils import predict_gesture
 
+# ------------------ Page Config ------------------
 st.set_page_config(page_title="Hand Gesture Recognition", page_icon="🤖", layout="centered")
 
 # ------------------ Style ------------------
@@ -50,13 +51,22 @@ if option == "📁 Upload Image":
         st.image(image, caption="Uploaded Image", use_column_width=True)
 
         if st.button("Predict Gesture"):
-            st.write("Loading model and predicting...")
+            st.write("🧠 Loading model and predicting...")
             # Convert PIL image to numpy array
             frame = np.array(image)
-            if len(frame.shape) == 3:  # RGB or RGBA
+
+            # Convert to grayscale if necessary
+            if len(frame.shape) == 3:
                 frame = cv2.cvtColor(frame, cv2.COLOR_RGB2GRAY)
-            predicted_gesture = predict_gesture(frame)
-            st.success(f"Predicted Gesture: {predicted_gesture}")
+            elif len(frame.shape) == 2:
+                pass  # already grayscale
+
+            # Predict gesture
+            try:
+                predicted_gesture = predict_gesture(frame)
+                st.success(f"Predicted Gesture: {predicted_gesture}")
+            except Exception as e:
+                st.error(f"❌ Error predicting gesture: {e}")
     else:
         st.warning("Please upload an image first.")
 
@@ -66,17 +76,18 @@ elif option == "📷 Use Camera":
     st.write("Click below to capture a photo using your webcam:")
     st.info("Please make sure your hand is clearly visible in front of the camera for best results.")
 
-    
     camera_image, processed = capture_frame()
+
     if camera_image is not None and processed is not None:
         st.image(camera_image, channels="BGR", caption="Captured Image", use_column_width=True)
         if st.button("Predict Gesture from Camera"):
-            prediction = predict_gesture(processed)
-            st.success(f"Predicted Gesture: {prediction}")
+            st.write("🧠 Loading model and predicting...")
+            try:
+                prediction = predict_gesture(processed)
+                st.success(f"Predicted Gesture: {prediction}")
+            except Exception as e:
+                st.error(f"❌ Error predicting gesture: {e}")
     else:
         st.error("❌ Failed to capture frame from camera.")
 
-
 st.markdown("---")
-
-
