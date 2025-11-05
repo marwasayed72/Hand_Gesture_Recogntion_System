@@ -1,6 +1,8 @@
 import cv2
 import numpy as np
 from tensorflow.keras.models import load_model
+import os
+
 
 model_path = os.path.join(os.path.dirname(__file__), "best.h5")
 model = load_model(model_path)
@@ -28,3 +30,4 @@ def predict_gesture(frame):
 
 
     return predicted_label
+
