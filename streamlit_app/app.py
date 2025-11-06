@@ -29,8 +29,8 @@ h1 { color: white !important; text-align: center; font-family: 'Arial Black'; }
 # ------------------ Header ------------------
 st.markdown("""
 <div style="text-align:center;">
-    <h2 style="color:white; font-size:22px;">🧠 Welcome to the Hand Gesture Recognition App</h2>
-    <p style="color:white; font-size:20px;">This AI-powered model can recognize various hand gestures in real-time.</p>
+    <h2 style="color:white; font-size:40px;">🧠 Welcome to the Hand Gesture Recognition App</h2>
+    <p style="color:white; font-size:25px;text-align:left;">This AI-powered model can recognize various hand gestures in real-time.</p>
 </div>
 """, unsafe_allow_html=True)
 
@@ -91,3 +91,4 @@ elif option == "📷 Use Camera":
         st.error("❌ Failed to capture frame from camera.")
 
 st.markdown("---")
+
