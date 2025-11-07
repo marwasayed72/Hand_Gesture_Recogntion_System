@@ -30,7 +30,7 @@ h1 { color: white !important; text-align: center; font-family: 'Arial Black'; }
 st.markdown("""
 <div style="text-align:center;">
     <h2 style="color:white; font-size:40px;">🧠 Welcome to the Hand Gesture Recognition App</h2>
-    <p style="color:white; font-size:25px;text-align:left;">This AI-powered model can recognize various hand gestures in real-time.</p>
+   # <p style="color:white; font-size:25px;text-align:left;">This AI-powered model can recognize various hand gestures in real-time.</p>
 </div>
 """, unsafe_allow_html=True)
 
@@ -90,6 +90,7 @@ elif option == "📷 Use Camera":
 # ------------------ Camera ------------------
 
 st.markdown("---")
+
 
 
 
