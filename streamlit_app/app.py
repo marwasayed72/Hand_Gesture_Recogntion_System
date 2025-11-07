@@ -41,55 +41,56 @@ st.markdown("---")
 #option = st.radio("", ("📁 Upload Image"))
 
 # ------------------ Upload Image ------------------
-if option == "📁 Upload Image":
-    st.subheader("Upload an Image")
-    uploaded_image = st.file_uploader("Upload an image...", type=["jpg", "jpeg", "png"])
-    
-    if uploaded_image is not None:
-        st.success("Image uploaded successfully!")
-        image = Image.open(uploaded_image)
-        st.image(image, caption="Uploaded Image", use_column_width=True)
+#if option == "📁 Upload Image":
+st.subheader("Upload an Image")
+uploaded_image = st.file_uploader("Upload an image...", type=["jpg", "jpeg", "png"])
 
-        if st.button("Predict Gesture"):
-            st.write("🧠 Loading model and predicting...")
-            # Convert PIL image to numpy array
-            frame = np.array(image)
+if uploaded_image is not None:
+    st.success("Image uploaded successfully!")
+    image = Image.open(uploaded_image)
+    st.image(image, caption="Uploaded Image", use_column_width=True)
 
-            # Convert to grayscale if necessary
-            if len(frame.shape) == 3:
-                frame = cv2.cvtColor(frame, cv2.COLOR_RGB2GRAY)
-            elif len(frame.shape) == 2:
-                pass  # already grayscale
+    if st.button("Predict Gesture"):
+        st.write("🧠 Loading model and predicting...")
+        # Convert PIL image to numpy array
+        frame = np.array(image)
 
-            # Predict gesture
-            try:
-                predicted_gesture = predict_gesture(frame)
-                st.success(f"Predicted Gesture: {predicted_gesture}")
-            except Exception as e:
-                st.error(f"❌ Error predicting gesture: {e}")
-    else:
-        st.warning("Please upload an image first.")
-elif option == "📷 Use Camera":
-    st.subheader("Capture from Camera")
-    st.write("Click below to capture a photo using your webcam:")
-    st.info("Please make sure your hand is clearly visible in front of the camera for best results.")
+        # Convert to grayscale if necessary
+        if len(frame.shape) == 3:
+            frame = cv2.cvtColor(frame, cv2.COLOR_RGB2GRAY)
+        elif len(frame.shape) == 2:
+            pass  # already grayscale
 
-    camera_image, processed = capture_frame()
+        # Predict gesture
+        try:
+            predicted_gesture = predict_gesture(frame)
+            st.success(f"Predicted Gesture: {predicted_gesture}")
+        except Exception as e:
+            st.error(f"❌ Error predicting gesture: {e}")
+else:
+    st.warning("Please upload an image first.")
+#elif option == "📷 Use Camera":
+st.subheader("Capture from Camera")
+st.write("Click below to capture a photo using your webcam:")
+st.info("Please make sure your hand is clearly visible in front of the camera for best results.")
 
-    if camera_image is not None and processed is not None:
-        st.image(camera_image, channels="BGR", caption="Captured Image", use_column_width=True)
-        if st.button("Predict Gesture from Camera"):
-            st.write("🧠 Loading model and predicting...")
-            try:
-                prediction = predict_gesture(processed)
-                st.success(f"Predicted Gesture: {prediction}")
-            except Exception as e:
-                st.error(f"❌ Error predicting gesture: {e}")
-    else:
-        st.error("❌ Failed to capture frame from camera.")
+camera_image, processed = capture_frame()
+
+if camera_image is not None and processed is not None:
+    st.image(camera_image, channels="BGR", caption="Captured Image", use_column_width=True)
+    if st.button("Predict Gesture from Camera"):
+        st.write("🧠 Loading model and predicting...")
+        try:
+            prediction = predict_gesture(processed)
+            st.success(f"Predicted Gesture: {prediction}")
+        except Exception as e:
+            st.error(f"❌ Error predicting gesture: {e}")
+else:
+    st.error("❌ Failed to capture frame from camera.")
 # ------------------ Camera ------------------
 
 st.markdown("---")
+
 
 
 
