@@ -70,16 +70,13 @@ if uploaded_image is not None:
 else:
     st.warning("Please upload an image first.")
 #elif option == "📷 Use Camera":
-st.subheader("Capture from Camera")
-st.write("Click below to capture a photo using your webcam:")
-st.info("Please make sure your hand is clearly visible in front of the camera for best results.")
 
-camera_image, processed = capture_frame()
 
 
 # ------------------ Camera ------------------
 
 st.markdown("---")
+
 
 
 
