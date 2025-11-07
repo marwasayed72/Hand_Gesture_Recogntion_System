@@ -69,13 +69,9 @@ if uploaded_image is not None:
             st.error(f"❌ Error predicting gesture: {e}")
 else:
     st.warning("Please upload an image first.")
-#elif option == "📷 Use Camera":
-
-
-
-# ------------------ Camera ------------------
 
 st.markdown("---")
+
 
 
 
