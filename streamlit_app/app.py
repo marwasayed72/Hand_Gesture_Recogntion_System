@@ -71,7 +71,7 @@ if option == "📁 Upload Image":
         st.warning("Please upload an image first.")
 
 # ------------------ Camera ------------------
-elif option == "📷 Use Camera":
+"""elif option == "📷 Use Camera":
     st.subheader("Capture from Camera")
     st.write("Click below to capture a photo using your webcam:")
     st.info("Please make sure your hand is clearly visible in front of the camera for best results.")
@@ -88,7 +88,8 @@ elif option == "📷 Use Camera":
             except Exception as e:
                 st.error(f"❌ Error predicting gesture: {e}")
     else:
-        st.error("❌ Failed to capture frame from camera.")
+        st.error("❌ Failed to capture frame from camera.")"""
 
 st.markdown("---")
+
 
