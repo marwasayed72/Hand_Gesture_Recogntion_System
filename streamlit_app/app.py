@@ -38,7 +38,7 @@ st.markdown("---")
 
 # ------------------ Input Type ------------------
 #st.markdown("<h3 style='color:white; font-size:25px; text-align:left;'>Select Input Type:</h3>", unsafe_allow_html=True)
-option = st.radio("", ("📁 Upload Image"))
+#option = st.radio("", ("📁 Upload Image"))
 
 # ------------------ Upload Image ------------------
 if option == "📁 Upload Image":
@@ -90,6 +90,7 @@ elif option == "📷 Use Camera":
 # ------------------ Camera ------------------
 
 st.markdown("---")
+
 
 
 
