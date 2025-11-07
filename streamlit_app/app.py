@@ -38,7 +38,7 @@ st.markdown("---")
 
 # ------------------ Input Type ------------------
 st.markdown("<h3 style='color:white; font-size:25px; text-align:left;'>Select Input Type:</h3>", unsafe_allow_html=True)
-option = st.radio("", ("📁 Upload Image", "📷 Use Camera"))
+option = st.radio("", ("📁 Upload Image"))
 
 # ------------------ Upload Image ------------------
 if option == "📁 Upload Image":
@@ -88,27 +88,28 @@ elif option == "📷 Use Camera":
     else:
         st.error("❌ Failed to capture frame from camera.")
 # ------------------ Camera ------------------
-elif option == "📷 Use Camera":
-    st.subheader("Capture from Camera")
-    st.write("Click below to capture a photo using your webcam:")
-    st.info("Please make sure your hand is clearly visible in front of the camera for best results.")
+#elif option == "📷 Use Camera":
+   # st.subheader("Capture from Camera")
+    #st.write("Click below to capture a photo using your webcam:")
+    #st.info("Please make sure your hand is clearly visible in front of the camera for best results.")
 
-    camera_image, processed = capture_frame()
+    #camera_image, processed = capture_frame()
 
-    if camera_image is not None and processed is not None:
-        st.image(camera_image, channels="BGR", caption="Captured Image", use_column_width=True)
-        if st.button("Predict Gesture from Camera"):
-            st.write("🧠 Loading model and predicting...")
-            try:
-                prediction = predict_gesture(processed)
-                st.success(f"Predicted Gesture: {prediction}")
-            except Exception as e:
-                st.error(f"❌ Error predicting gesture: {e}")
-    else:
-        st.error("❌ Failed to capture frame from camera.")
+    #if camera_image is not None and processed is not None:
+       # st.image(camera_image, channels="BGR", caption="Captured Image", use_column_width=True)
+        #if st.button("Predict Gesture from Camera"):
+         #   st.write("🧠 Loading model and predicting...")
+          #  try:
+           #     prediction = predict_gesture(processed)
+            #    st.success(f"Predicted Gesture: {prediction}")
+            #except Exception as e:
+             #   st.error(f"❌ Error predicting gesture: {e}")
+    #else:
+     #   st.error("❌ Failed to capture frame from camera.")
 
 
 st.markdown("---")
+
 
 
 
