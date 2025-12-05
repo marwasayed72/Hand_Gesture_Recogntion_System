@@ -28,18 +28,8 @@ Here are the final metrics of the model:
 | Metric         | Value |
 |----------------|-------|
 | **Loss**       | 0.0737 |
-| **Accuracy**   | (ضعى القيمة التي لديك لو موجودة) |
-| **Val Accuracy** | (ضعى القيمة) |
+| **Accuracy**   | 0.9957|
 
 ---
 
-## 🏗️ Project Structure
-Hand_Gesture_Recognition_System/
-│── dataset/
-│── src/
-│ ├── model/
-│ ├── preprocessing/
-│ ├── utils/
-│── saved_models/
-│── requirements.txt
-│── README.md
+
